@@ -5,8 +5,8 @@ var router = express.Router();
 /*
 ** Login function for checking if user is authorized to access cms
 */
-router.get('/', function (req, res, next) {
-  db.getAllUsers(req, res, next);
+router.post('/', function (req, res, next) {
+  return db.getAllUsers(req, res, next);
 });
 
 module.exports = router;

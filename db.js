@@ -32,7 +32,9 @@ module.exports = {
 ** getAllUsers function, for retrieving all users
 */
 function getAllUsers(req, res, next) {
-    db.any('select * from users')
+    var email       = req.body.email,
+        password    = req.body.password; 
+    db.any('SELECT * FROM users WHERE email = \'' + email + '\' AND password = \'' + password + '\'')
         .then(function (data) {
             res.status(200)
                 .json({
