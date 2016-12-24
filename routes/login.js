@@ -1,8 +1,12 @@
 var express = require('express');
+var db = require('../db.js');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.json({ message: 'hooray! welcome to our api!' });  
+/*
+** Login function for checking if user is authorized to access cms
+*/
+router.get('/', function (req, res, next) {
+  db.getAllUsers(req, res, next);
 });
 
 module.exports = router;
