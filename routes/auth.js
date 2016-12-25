@@ -22,8 +22,11 @@ router.post('/register', function (req, res, next) {
 
   // If there are any - return them to UI
   if (errors) {
-    res.send(errors);
-    return;
+    return res.status(200)
+      .json({
+        status: 'errors',
+        errors: errors
+      });
   } else {
     // Let's check if user is unique
     if (db.userIsUnique(req)) {
@@ -33,8 +36,11 @@ router.post('/register', function (req, res, next) {
       // User is not unique, let's return error message
       return res.status(200)
         .json({
-          param: 'email',
-          msg: 'E-mail address is not unique!'
+          status: 'errors',
+          errors: [{
+            param: 'email',
+            msg: 'E-mail address is not unique!'
+          }]
         });
     }
   }
@@ -45,18 +51,18 @@ router.post('/register', function (req, res, next) {
 */
 function validateRegisterData(data) {
   // Validate e-mail
-  data.checkBody("email", "E-mail field must contain a valid e-mail").isEmail();
+  data.checkBody("email", "E-mail field must contain a valid e-mail!").isEmail();
 
   // Validate password
-  data.checkBody("password", "Password must be from 6 to 30 characters long").isLength({ min: 6, max: 30 });
+  data.checkBody("password", "Password must be from 6 to 30 characters long!").isLength({ min: 6, max: 30 });
 
   // Validate name
-  data.checkBody("name", "Name field must contain only letters").isAlpha();
-  data.checkBody("name", "Name must be from 1 to 30 characters long").isLength({ min: 1, max: 30 });
+  data.checkBody("name", "Name field must contain only letters!").isAlpha();
+  data.checkBody("name", "Name must be from 1 to 30 characters long!").isLength({ min: 1, max: 30 });
 
   // Validate surname
-  data.checkBody("surname", "Surname field must contain only letters").isAlpha();
-  data.checkBody("surname", "Surname must be from 1 to 30 characters long").isLength({ min: 1, max: 30 });
+  data.checkBody("surname", "Surname field must contain only letters!").isAlpha();
+  data.checkBody("surname", "Surname must be from 1 to 30 characters long!").isLength({ min: 1, max: 30 });
 
   // Validate age
   data.checkBody("age", "Age must be a number between 0 and 120!").isInt({ min: 0, max: 120 });
