@@ -14,5 +14,5 @@ CREATE TABLE users (
     email VARCHAR,
     age INTEGER,
     password VARCHAR,
-    sex VARCHAR
+    gender VARCHAR
 );
