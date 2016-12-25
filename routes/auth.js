@@ -29,20 +29,7 @@ router.post('/register', function (req, res, next) {
       });
   } else {
     // Let's check if user is unique
-    if (db.userIsUnique(req)) {
-      // User is unique, let's add user to database
-      return db.registerUser(req, res, next);
-    } else {
-      // User is not unique, let's return error message
-      return res.status(200)
-        .json({
-          status: 'errors',
-          errors: [{
-            param: 'email',
-            msg: 'E-mail address is not unique!'
-          }]
-        });
-    }
+    db.userIsUnique(req, res, next)
   }
 });
 
