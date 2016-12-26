@@ -52,7 +52,7 @@ function validateRegisterData(data) {
   data.checkBody("surname", "Surname must be from 1 to 30 characters long!").isLength({ min: 1, max: 30 });
 
   // Validate age
-  data.checkBody("age", "Age must be a number between 0 and 120!").isInt({ min: 0, max: 120 });
+  data.checkBody("birthday", "Birthday must be in a date format").isDate();
 }
 
 module.exports = router;

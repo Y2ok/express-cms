@@ -26,7 +26,7 @@ CREATE TABLE users (
     name VARCHAR,
     surname VARCHAR,
     email VARCHAR UNIQUE,
-    age INTEGER,
+    birthday DATE,
     password VARCHAR,
     gender VARCHAR,
     role_id INTEGER REFERENCES roles (ID)

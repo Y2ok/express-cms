@@ -114,12 +114,12 @@ function registerUser(req, res, next) {
                 email: req.body.email,
                 name: req.body.name,
                 surname: req.body.surname,
-                age: req.body.age,
+                birthday: req.body.birthday,
                 gender: req.body.gender,
                 role: 2
             };
             // Let's insert user in database
-            db.none('INSERT INTO users (email, name, surname, password, gender, age, role_id) VALUES (${email}, ${name}, ${surname}, ${password}, ${gender}, ${age}, ${role})', user)
+            db.none('INSERT INTO users (email, name, surname, password, gender, birthday, role_id) VALUES (${email}, ${name}, ${surname}, ${password}, ${gender}, ${birthday}, ${role})', user)
                 .then(function () {
                     res.status(200)
                         .json({
