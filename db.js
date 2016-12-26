@@ -41,7 +41,7 @@ function userIsUnique(req, res, next) {
             // User doesn't exist, let's register it
             registerUser(req, res, next);
         })
-        .catch(function (err) {
+        .catch(function (error) {
             // User is not unique, let's return error message
             return res.status(200)
                 .json({
