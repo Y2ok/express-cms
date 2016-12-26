@@ -71,13 +71,19 @@ function checkUserData(req, res, next) {
                     return res.status(200)
                         .json({
                             status: 'success',
-                            message: 'Login has been successful!'
+                            message: {
+                                param: 'generalError',
+                                msg: 'Incorrect e-mail or password'
+                            }
                         });
                 } else { // Return error message that password or e-mail is wrong
                     return res.status(200)
                         .json({
                             status: 'error',
-                            message: 'Incorrect e-mail or password'
+                            message: {
+                                param: 'generalError',
+                                msg: 'Incorrect e-mail or password'
+                            }
                         });
                 }
             });
@@ -87,7 +93,10 @@ function checkUserData(req, res, next) {
             return res.status(200)
                 .json({
                     status: 'error',
-                    message: 'Incorrect e-mail or password'
+                    message: {
+                        param: 'generalError',
+                        msg: 'Incorrect e-mail or password'
+                    }
                 });
         });
 }
@@ -106,10 +115,11 @@ function registerUser(req, res, next) {
                 name: req.body.name,
                 surname: req.body.surname,
                 age: req.body.age,
-                gender: req.body.gende
+                gender: req.body.gender,
+                role: 2
             };
             // Let's insert user in database
-            db.none('INSERT INTO users (email, name, surname, password, sex, age) VALUES (${email}, ${name}, ${surname}, ${password}, ${gender}, ${age})', user)
+            db.none('INSERT INTO users (email, name, surname, password, gender, age, role_id) VALUES (${email}, ${name}, ${surname}, ${password}, ${gender}, ${age}, ${role})', user)
                 .then(function () {
                     res.status(200)
                         .json({

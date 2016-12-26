@@ -7,12 +7,36 @@ CREATE DATABASE "ng-cms"
 
 \c ng-cms;
 
+/*
+** Roles table
+*/
+CREATE TABLE roles (
+    ID SERIAL PRIMARY KEY,
+    name VARCHAR UNIQUE
+);
+
+INSERT INTO roles (name) VALUES('Administrator');
+INSERT INTO roles (name) VALUES('User');
+
+/*
+** Users table
+*/
 CREATE TABLE users (
     ID SERIAL PRIMARY KEY,
     name VARCHAR,
     surname VARCHAR,
-    email VARCHAR,
+    email VARCHAR UNIQUE,
     age INTEGER,
     password VARCHAR,
-    gender VARCHAR
+    gender VARCHAR,
+    role_id INTEGER REFERENCES roles (ID)
+);
+
+/*
+** Role Activity table
+*/
+CREATE TABLE role_activities (
+    ID SERIAL PRIMARY KEY,
+    name VARCHAR UNIQUE,
+    role_id INTEGER REFERENCES roles (ID)   
 );
