@@ -28,8 +28,49 @@ var db = pgp(cn);
 module.exports = {
     checkUserData: checkUserData,
     registerUser: registerUser,
-    userIsUnique: userIsUnique
+    userIsUnique: userIsUnique,
+    getUsers: getUsers,
+    deleteUser: deleteUser
 };
+
+/*
+** deleteUser function, for deleting a specific user
+*/
+function deleteUser(req, res, next) {
+    // Let's try to delete user with passed id
+    db.none('DELETE FROM users WHERE id = $1', req.params.id)
+        .then(function (data) {
+            // Return success message
+            return res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'User has been deleted'
+                });
+        })
+        .catch(function (error) {
+            // Return an error
+            return next(error);
+        });
+}
+
+/*
+** getUsers funtion, for retrieving all users
+*/
+function getUsers(req, res, next) {
+    db.any('SELECT users.id, users.name, users.surname, users.email, users.birthday, users.gender, roles.name as role FROM users INNER JOIN roles ON users.role_id = roles.id ORDER BY users.id DESC')
+        .then(function (data) {
+            // Return data
+            return res.status(200)
+                .json({
+                    status: 'success',
+                    users: data
+                });
+        })
+        .catch(function (error) {
+            // Error occured
+            return next(error);
+        });
+}
 
 /*
 ** userIsUnique function, for checking if user already exists in database
