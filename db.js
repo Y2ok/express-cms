@@ -107,6 +107,7 @@ function checkUserData(req, res, next) {
 function registerUser(req, res, next) {
     // Let's hash and salt password
     bcrypt.hash(req.body.password, 12, function (error, hashedPass) {
+        console.log(new Date());
         // If there are no issues during hashing and salting, let's try to insert user
         if (!error) {
             var user = {
@@ -115,11 +116,12 @@ function registerUser(req, res, next) {
                 name: req.body.name,
                 surname: req.body.surname,
                 birthday: req.body.birthday,
+                creationDate: req.body.creationDate,
                 gender: req.body.gender,
                 role: 2
             };
             // Let's insert user in database
-            db.none('INSERT INTO users (email, name, surname, password, gender, birthday, role_id) VALUES (${email}, ${name}, ${surname}, ${password}, ${gender}, ${birthday}, ${role})', user)
+            db.none('INSERT INTO users (email, name, surname, password, birthday, creationDate, gender, role_id) VALUES (${email}, ${name}, ${surname}, ${password}, ${birthday}, ${creationDate}, ${gender}, ${role})', user)
                 .then(function () {
                     res.status(200)
                         .json({
